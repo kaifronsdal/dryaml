@@ -1,0 +1,69 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm", "wheel"]
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+
+[project]
+name = "dryaml"
+description = "Don't Repeat Yourself YAML is an extension to YAML that includes references within and across configuration files to reduce boilerplate, string interpolation, and more."
+readme = "README.md"
+dynamic = ["version"]
+authors = [
+  {name = "QuantCo, Inc.", email = "noreply@quantco.com"},
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+]
+requires-python = ">=3.8"
+
+[project.urls]
+repository = "https://github.com/Quantco/dryaml"
+
+
+[tool.setuptools.packages.find]
+include = ["dryaml"]
+namespaces = false
+
+[project.scripts]
+
+[tool.black]
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+ensure_newline_before_comments = true
+line_length = 88
+known_first_party = "dryaml"
+skip_glob = '\.eggs/*,\.git/*,\.venv/*,build/*,dist/*'
+default_section = 'THIRDPARTY'
+
+[tool.mypy]
+python_version = '3.8'
+ignore_missing_imports = true
+no_implicit_optional = true
+check_untyped_defs = true
+
+
+[tool.docformatter]
+pre-summary-newline = true
+recursive = true
+wrap-descriptions = 88
+wrap-summaries = 88
+
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib --cov=dryaml --cov-report term-missing"

@@ -1,0 +1,12 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v0.5.0
+_src_path: https://github.com/Quantco/copier-template-python
+add_windows_tests_to_ci: true
+github_remote: git@github.com:kaifronsdal/dryaml.git
+github_user: kaifronsdal
+project_license: Open Source
+project_name: dryaml
+project_short_description: Don't Repeat Yourself YAML is an extension to YAML that
+    includes references within and across configuration files to reduce boilerplate,
+    string interpolation, and more.
+project_slug: dryaml

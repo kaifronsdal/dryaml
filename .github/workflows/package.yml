@@ -1,0 +1,67 @@
+name: Package
+on: [push]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+defaults:
+  run:
+    shell: bash -el {0}
+env:
+  CONDA_API_KEY: ${{ secrets.QUETZ_API_KEY }}
+
+jobs:
+  build:
+    name: Build Package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup conda
+        uses: mamba-org/setup-micromamba@d05808540d968a55ca33c798e0661fb98f533c73
+        with:
+          environment-name: build
+          condarc-file: .github/workflows/.condarc
+          create-args: >-
+            python
+            boa
+      - name: Run build
+        run: |
+          mkdir build-artifacts
+          conda mambabuild --output-folder build-artifacts conda.recipe
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: package
+          path: |
+            build-artifacts/**/*.tar.bz2
+            build-artifacts/**/*.conda
+
+  upload:
+    name: Upload Package
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: package
+          path: build-artifacts
+      - name: Setup conda
+        uses: mamba-org/setup-micromamba@d05808540d968a55ca33c798e0661fb98f533c73
+        with:
+          environment-name: upload
+          condarc-file: .github/workflows/.condarc
+          create-args: quetz-client=0.5.0
+      - name: Upload package
+        run: |
+          for pkg in $(find build-artifacts -type f); do
+              echo "Uploading ${pkg}"
+              quetz-client --retry=true post-file-to-channel qc-internal ${pkg}
+          done
+        env:
+          QUETZ_SERVER_URL: https://conda.prod.quantco.cloud
+          QUETZ_API_KEY: ${{ secrets.QUETZ_API_KEY }}

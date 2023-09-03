@@ -1,0 +1,7 @@
+channels:
+  - qc-internal
+  - conda-forge
+
+custom_multichannels:
+  qc-internal:
+    - https://conda.prod.quantco.cloud/t/${CONDA_API_KEY}/get/qc-internal
