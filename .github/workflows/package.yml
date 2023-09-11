@@ -18,7 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup conda
-        uses: mamba-org/setup-micromamba@d05808540d968a55ca33c798e0661fb98f533c73
+        uses: mamba-org/setup-micromamba@2b72821d5ad7f6da3c003a3684ce341bf187b46f
         with:
           environment-name: build
           condarc-file: .github/workflows/.condarc
@@ -51,7 +51,7 @@ jobs:
           name: package
           path: build-artifacts
       - name: Setup conda
-        uses: mamba-org/setup-micromamba@d05808540d968a55ca33c798e0661fb98f533c73
+        uses: mamba-org/setup-micromamba@2b72821d5ad7f6da3c003a3684ce341bf187b46f
         with:
           environment-name: upload
           condarc-file: .github/workflows/.condarc
