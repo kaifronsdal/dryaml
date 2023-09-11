@@ -22,7 +22,7 @@ jobs:
       PRE_COMMIT_USE_MICROMAMBA: 1
     steps:
       - name: Checkout branch
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v4
       - name: Set up micromamba
         uses: mamba-org/setup-micromamba@d05808540d968a55ca33c798e0661fb98f533c73
       - name: Add micromamba to GITHUB_PATH
@@ -44,7 +44,7 @@ jobs:
         PYTHON_VERSION: ["3.8", "3.9", "3.10", "3.11"]
     steps:
       - name: Checkout branch
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
       - name: Fetch full git history
@@ -62,7 +62,7 @@ jobs:
       - name: Install repository
         run: python -m pip install --no-build-isolation --no-deps --disable-pip-version-check -e .
       - name: Checkout Quantco/pytest-action
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v4
         with:
           repository: Quantco/pytest-action
           ref: v2
