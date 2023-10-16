@@ -31,7 +31,7 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: Fetch full git history
         run: git fetch --prune --unshallow
-      - uses: mamba-org/setup-micromamba@d05808540d968a55ca33c798e0661fb98f533c73
+      - uses: mamba-org/setup-micromamba@54d4d5980e1a4aa7cdc8b050cf2d19b7e262ce18
         with:
           condarc-file: .github/workflows/.condarc
           environment-file: environment.yml
